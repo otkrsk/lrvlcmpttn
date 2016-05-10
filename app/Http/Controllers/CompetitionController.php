@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+
+use Auth;
+use App\Comment;
 use App\Competition;
 use App\Submission;
 
@@ -18,6 +21,13 @@ class CompetitionController extends Controller
   public function show($id) {
     $competition = Competition::find($id);
     $submissions = Submission::where('competition_id', $id)->get();
+
+    // $comments = Comment::where(function($query) {
+    //   return $query->where('submission_id', $submissions->id);
+    // })->get();
+    //
+    // dd($comments);
+
     return view('competition.show', compact('competition', 'submissions'));
   }
 

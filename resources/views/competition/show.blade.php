@@ -39,6 +39,23 @@
               <small>{{ $submission->likes->count() }} {{ str_plural('like', $submission->likes->count()) }}</small>
             </div>
             <div class="">
+              <?php
+                $comments = $submission->getComments($submission);
+                $comments = $comments->sortByDesc('created_at');
+              ?>
+              @foreach($comments as $comment)
+                <?php
+                  $author = $comment->getCommentAuthor($comment->user_id);
+                  $author = $author->toArray();
+                  // dd($author[0]['name']);
+                ?>
+                <p>
+                  {{ $comment->body }}
+                  <br><small>{{ $author[0]['name'] }} | {{ date('d M Y g:i:s A', strtotime($comment->created_at)) }}</small>
+                </p>
+              @endforeach
+            </div>
+            <div class="">
               {!! Form::model($submission, array(
                 'route' => array('comments.post', $submission->id)
                 )) !!}
@@ -48,7 +65,7 @@
                 </div>
 
                 <div class="">
-                  {!! Form::submit('Submit Comment') !!}
+                  {!! Form::submit('Submit a Comment') !!}
                 </div>
 
               {!! Form::close() !!}

@@ -24,4 +24,11 @@ class Submission extends Model
     return $this->hasMany('App\Comment', 'submission_id');
   }
 
+  public function getComments(Submission $submission) {
+    // dd($submission->comments);
+    // return $submission->comments->where('submission_id', $submission->id);
+    // return $submission->comments->sortByDesc('created_at');
+    return $submission->comments;
+  }
+
 }

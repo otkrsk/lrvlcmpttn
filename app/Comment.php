@@ -19,4 +19,9 @@ class Comment extends Model
   public function submission() {
     return $this->belongsTo('App\Submission', 'submission_id');
   }
+
+  public function getCommentAuthor($userId) {
+    return User::where('id', $userId)
+      ->get();
+  }
 }
