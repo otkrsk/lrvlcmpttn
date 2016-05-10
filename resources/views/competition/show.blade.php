@@ -12,6 +12,21 @@
         <a href="{{ route('submission.create') }}?competition={{ $competition->id }}">Create a submission</a>
       </div>
       <div class="">
+        <h2>Winners:</h2>
+      </div>
+      <div class="">
+        @if($winners)
+          @foreach($winners as $winner)
+            <p>{{ $winner->id }}: {{ $winner->name }}
+            <br><small>{{ $winner->getAuthor($winner)}}</small></p>
+          @endforeach
+        @else
+          <p>
+            There are no winners!
+          </p>
+        @endif
+      </div>
+      <div class="">
         <h3>{{ $competition->title }}</h3>
         <p>
           {{ $competition->subtitle }}
@@ -28,13 +43,23 @@
         @if(count($submissions) > 0)
           @foreach($submissions as $submission)
             <div class="">
-              {{ $submission->id }}: {{ $submission->name }} | <small>{{ date('d M, Y', strtotime($submission->created_at)) }} ({{ $submission->created_at->diffForHumans() }})</small><br>
-              @if($submission->user->id !== Auth::user()->id)
-                @if(Auth::user()->hasLikedSubmission($submission))
-                  <small><a href="{{ route('submission.unlike', ['submissionId' => $submission->id]) }}">Unlike</a> | </small>
+              {{ $submission->id }}: {{ $submission->name }} |
+              <small>
+                @if(!$submission->is_winner)
+                  <a href="{{ route('submission.select', ['id' => $submission->id])}}">select as winner</a>
                 @else
-                  <small><a href="{{ route('submission.like', ['submissionId' => $submission->id]) }}">Like</a> | </small>
+                  <a href="{{ route('submission.deselect', ['id' => $submission->id])}}">deselect as winner</a>
                 @endif
+              </small>
+              <br><small>{{ date('d M, Y', strtotime($submission->created_at)) }} ({{ $submission->created_at->diffForHumans() }}) | {{ $submission->getAuthor($submission) }}</small><br>
+              @if($submission->user->id !== Auth::user()->id)
+                <small>
+                  @if(Auth::user()->hasLikedSubmission($submission))
+                    <a href="{{ route('submission.unlike', ['submissionId' => $submission->id]) }}">Unlike</a> |
+                  @else
+                    <a href="{{ route('submission.like', ['submissionId' => $submission->id]) }}">Like</a> |
+                  @endif
+                </small>
               @endif
               <small>{{ $submission->likes->count() }} {{ str_plural('like', $submission->likes->count()) }}</small>
             </div>

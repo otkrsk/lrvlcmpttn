@@ -21,6 +21,9 @@ class CompetitionController extends Controller
   public function show($id) {
     $competition = Competition::find($id);
     $submissions = Submission::where('competition_id', $id)->get();
+    $winners = Submission::where('competition_id', $id)
+                ->where('is_winner', true)
+                ->get();
 
     // $comments = Comment::where(function($query) {
     //   return $query->where('submission_id', $submissions->id);
@@ -28,7 +31,7 @@ class CompetitionController extends Controller
     //
     // dd($comments);
 
-    return view('competition.show', compact('competition', 'submissions'));
+    return view('competition.show', compact('competition', 'submissions', 'winners'));
   }
 
   public function create() {

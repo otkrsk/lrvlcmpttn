@@ -78,4 +78,18 @@ class SubmissionController extends Controller
     return redirect()->back();
   }
 
+  public function selectWinner($submissionId) {
+    $submission = Submission::find($submissionId);
+    $submission->update(['is_winner' => 1]);
+
+    return redirect()->back();
+  }
+
+  public function deSelectWinner($submissionId) {
+    $submission = Submission::find($submissionId);
+    $submission->update(['is_winner' => 0]);
+
+    return redirect()->back();
+  }
+
 }

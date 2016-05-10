@@ -28,6 +28,8 @@ Route::group(['middleware' => ['web']], function () {
   Route::get('/home', 'HomeController@index');
   Route::get('competition/create', 'CompetitionController@create');
   Route::resource('competition', 'CompetitionController');
+  Route::get('submission/{submissionId}/deselect', ['uses' => 'SubmissionController@deSelectWinner', 'as' => 'submission.deselect']);
+  Route::get('submission/{submissionId}/select', ['uses' => 'SubmissionController@selectWinner', 'as' => 'submission.select']);
   Route::get('submission/{submissionId}/like', ['uses' => 'SubmissionController@getLike', 'as' => 'submission.like']);
   Route::get('submission/{submissionId}/unlike', ['uses' => 'SubmissionController@unLike', 'as' => 'submission.unlike']);
   Route::post('comments/post/{submissionId}', ['uses' => 'SubmissionController@postComment', 'as' => 'comments.post']);

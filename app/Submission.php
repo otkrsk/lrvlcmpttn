@@ -8,6 +8,10 @@ class Submission extends Model
 {
   protected $table = 'submissions';
 
+  protected $fillable = [
+    'is_winner'
+  ];
+
   public function competition() {
     return $this->belongsTo('App\Competition', 'competition_id');
   }
@@ -29,6 +33,10 @@ class Submission extends Model
     // return $submission->comments->where('submission_id', $submission->id);
     // return $submission->comments->sortByDesc('created_at');
     return $submission->comments;
+  }
+
+  public function getAuthor(Submission $submission) {
+    return $submission->user->name;
   }
 
 }

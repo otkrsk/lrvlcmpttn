@@ -17,6 +17,7 @@ class CreateSubmissionTable extends Migration
         $table->integer('competition_id');
         $table->integer('user_id');
         $table->string('name');
+        $table->boolean('is_winner')->default(0);
         $table->timestamps();
       });
     }
