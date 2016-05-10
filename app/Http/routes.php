@@ -30,7 +30,9 @@ Route::group(['middleware' => ['web']], function () {
   Route::resource('competition', 'CompetitionController');
   Route::get('submission/{submissionId}/like', ['uses' => 'SubmissionController@getLike', 'as' => 'submission.like']);
   Route::get('submission/{submissionId}/unlike', ['uses' => 'SubmissionController@unLike', 'as' => 'submission.unlike']);
+  Route::post('comments/post/{submissionId}', ['uses' => 'SubmissionController@postComment', 'as' => 'comments.post']);
   Route::resource('submission', 'SubmissionController');
+  Route::resource('comments', 'CommentsController');
 });
 
 Route::auth();

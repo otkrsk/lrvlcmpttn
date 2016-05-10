@@ -20,4 +20,8 @@ class Submission extends Model
     return $this->morphMany('App\Like', 'likeable');
   }
 
+  public function comments() {
+    return $this->hasMany('App\Comment', 'submission_id');
+  }
+
 }

@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use Auth;
 use DB;
 use App\Http\Requests;
-use App\Submission;
+
+use App\Comment;
 use App\Competition;
+use App\Submission;
 use App\User;
 
 class SubmissionController extends Controller
@@ -38,8 +40,6 @@ class SubmissionController extends Controller
   }
 
   public function getLike($submissionId) {
-    // dd($submissionId);
-
     $submission = Submission::find($submissionId);
 
     if(!$submission) {
@@ -57,15 +57,23 @@ class SubmissionController extends Controller
   }
 
   public function unLike($submissionId) {
-
     $submission = Submission::find($submissionId);
-
-    // $submission->likes()->detach($submission);
 
     DB::table('likeable')->where('likeable_id', $submission->id)
       ->where('likeable_type', get_class($submission))
       ->where('user_id', Auth::user()->id)
       ->delete();
+
+    return redirect()->back();
+  }
+
+  public function postComment(Request $request, $submissionId) {
+    $submission = Submission::find($submissionId);
+
+    $comment = $submission->comments()->create([
+      'body' => $request->input('comment'),
+    ]);
+    Auth::user()->comments()->save($comment);
 
     return redirect()->back();
   }

@@ -38,6 +38,21 @@
               @endif
               <small>{{ $submission->likes->count() }} {{ str_plural('like', $submission->likes->count()) }}</small>
             </div>
+            <div class="">
+              {!! Form::model($submission, array(
+                'route' => array('comments.post', $submission->id)
+                )) !!}
+
+                <div class="">
+                  {!! Form::textarea('comment') !!}
+                </div>
+
+                <div class="">
+                  {!! Form::submit('Submit Comment') !!}
+                </div>
+
+              {!! Form::close() !!}
+            </div>
           @endforeach
         @endif
       </div>
