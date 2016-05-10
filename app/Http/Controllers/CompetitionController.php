@@ -50,4 +50,19 @@ class CompetitionController extends Controller
 
     return redirect()->action('CompetitionController@index');
   }
+
+  public function confirmWinners($id) {
+    $competition = Competition::find($id);
+    $winners = Submission::where('competition_id', $id)
+                ->where('is_winner', true)
+                ->get();
+
+    foreach ($winners as $winner) {
+      $winner->isWinner()->attach($id);
+    }
+
+    $competition->update(['is_open' => false]);
+
+    return redirect()->back();
+  }
 }

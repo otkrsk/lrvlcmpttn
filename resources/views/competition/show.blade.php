@@ -9,7 +9,11 @@
         <h2>{{ $competition->id }}: {{ $competition->name }}</h2>
       </div>
       <div class="">
-        <a href="{{ route('submission.create') }}?competition={{ $competition->id }}">Create a submission</a>
+        @if(!$competition->is_open)
+          <p><em>Competition has been closed.</em></p>
+        @else
+          <a href="{{ route('submission.create', ['competition' => $competition->id]) }}">Create a submission</a>
+        @endif
       </div>
       <div class="">
         <h2>Winners:</h2>
@@ -25,6 +29,9 @@
             There are no winners!
           </p>
         @endif
+      </div>
+      <div class="">
+        <p><a href="{{ route('competition.confirmclose', ['$id' => $competition->id]) }}">Confirm winners and close competition.</a></p>
       </div>
       <div class="">
         <h3>{{ $competition->title }}</h3>

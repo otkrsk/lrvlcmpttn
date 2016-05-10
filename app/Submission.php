@@ -39,4 +39,8 @@ class Submission extends Model
     return $submission->user->name;
   }
 
+  public function isWinner() {
+    return $this->belongsToMany('App\Competition', 'competition_submission', 'submission_id', 'competition_id');
+  }
+
 }

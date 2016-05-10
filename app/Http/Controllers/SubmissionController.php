@@ -21,6 +21,14 @@ class SubmissionController extends Controller
   }
 
   public function create() {
+    $competition = Competition::find($_GET['competition']);
+
+    if(!$competition->is_open) {
+      return redirect()
+              ->back()
+              ->with('info', 'Competition has been closed.');
+    }
+
     return view('submission.create');
   }
 

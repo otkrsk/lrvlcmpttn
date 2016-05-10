@@ -27,12 +27,14 @@ Route::group(['middleware' => ['web']], function () {
   Route::get('/', 'HomeController@index');
   Route::get('/home', 'HomeController@index');
   Route::get('competition/create', 'CompetitionController@create');
+  Route::get('competition/{id}/confirmclose', ['uses' => 'CompetitionController@confirmWinners', 'as' => 'competition.confirmclose']);
   Route::resource('competition', 'CompetitionController');
   Route::get('submission/{submissionId}/deselect', ['uses' => 'SubmissionController@deSelectWinner', 'as' => 'submission.deselect']);
   Route::get('submission/{submissionId}/select', ['uses' => 'SubmissionController@selectWinner', 'as' => 'submission.select']);
   Route::get('submission/{submissionId}/like', ['uses' => 'SubmissionController@getLike', 'as' => 'submission.like']);
   Route::get('submission/{submissionId}/unlike', ['uses' => 'SubmissionController@unLike', 'as' => 'submission.unlike']);
   Route::post('comments/post/{submissionId}', ['uses' => 'SubmissionController@postComment', 'as' => 'comments.post']);
+  Route::get('submission/create/{competitionId}', 'SubmissionController@create');
   Route::resource('submission', 'SubmissionController');
   Route::resource('comments', 'CommentsController');
 });
