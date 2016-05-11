@@ -43,4 +43,8 @@ class Submission extends Model
     return $this->belongsToMany('App\Competition', 'competition_submission', 'submission_id', 'competition_id');
   }
 
+  public function getCompetitionId(Submission $submission) {
+    return $submission->competition_id;
+  }
+
 }

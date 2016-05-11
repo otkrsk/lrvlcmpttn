@@ -34,8 +34,11 @@ Route::group(['middleware' => ['web']], function () {
   Route::get('submission/{submissionId}/like', ['uses' => 'SubmissionController@getLike', 'as' => 'submission.like']);
   Route::get('submission/{submissionId}/unlike', ['uses' => 'SubmissionController@unLike', 'as' => 'submission.unlike']);
   Route::post('comments/post/{submissionId}', ['uses' => 'SubmissionController@postComment', 'as' => 'comments.post']);
-  Route::get('submission/create/{competitionId}', 'SubmissionController@create');
+  Route::get('submission/{id}/redirect', ['uses' => 'SubmissionController@redirect', 'as' => 'submission.redirect']);
+  Route::get('submission/{submission}/delete', ['uses' => 'SubmissionController@delete', 'as' => 'submission.delete']);
   Route::resource('submission', 'SubmissionController');
+  Route::get('comment/{id}/redirect', ['uses' => 'CommentsController@redirect', 'as' => 'comments.redirect']);
+  Route::get('comment/{comment}/delete', ['uses' => 'CommentsController@delete', 'as' => 'comments.delete']);
   Route::resource('comments', 'CommentsController');
 });
 

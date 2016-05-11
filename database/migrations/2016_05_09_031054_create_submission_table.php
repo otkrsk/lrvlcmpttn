@@ -16,7 +16,15 @@ class CreateSubmissionTable extends Migration
         $table->increments('id');
         $table->integer('competition_id');
         $table->integer('user_id');
+        $table->string('type');
         $table->string('name');
+        $table->text('description');
+        $table->string('file_name');
+        $table->string('file_path');
+        $table->string('web_url');
+        $table->string('cover_image');
+        $table->string('pdf');
+        $table->string('editors_note');
         $table->boolean('is_winner')->default(0);
         $table->timestamps();
       });

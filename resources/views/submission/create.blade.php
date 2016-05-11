@@ -8,23 +8,7 @@
       <h2>Create Submission</h2>
 
       <div class="">
-        {!! Form::open(array(
-          'route' => 'submission.store',
-          )) !!}
-
-          {!! Form::hidden('competition_id', $_GET['competition']) !!}
-
-
-          <div class="">
-            {!! Form::label('name') !!}
-            {!! Form::text('name') !!}
-          </div>
-
-          <div class="">
-            {!! Form::submit('Submit') !!}
-          </div>
-
-        {!! Form::close() !!}
+        <a href="{{ route('submission.create', ['competition' => $competition->id, 'type' => 'web']) }}">Web URL</a> | <a href="{{ route('submission.create', ['competition' => $competition->id, 'type' => 'photo']) }}">Upload pictures</a>
       </div>
     </div>
   </div>

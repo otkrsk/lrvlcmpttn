@@ -34,13 +34,30 @@ class CompetitionController extends Controller
     return view('competition.show', compact('competition', 'submissions', 'winners'));
   }
 
+  public function edit($id) {
+    $competition = Competition::find($id);
+    return view('competition.edit', compact('competition'));
+  }
+
   public function create() {
     return view('competition.create');
   }
 
-  public function store(Request $request) {
-    // dd($request);
+  public function update(Request $request, $id) {
+    $competition = Competition::find($id);
 
+    $competition->name = $request->name;
+    $competition->instructions = $request->instructions;
+    $competition->title = $request->title;
+    $competition->subtitle = $request->subtitle;
+
+    $competition->save();
+
+    return redirect()->action('CompetitionController@show', ['id' => $competition->id]);
+
+  }
+
+  public function store(Request $request) {
     $competition = new Competition;
     $competition->name = $request->name;
     $competition->instructions = $request->instructions;
